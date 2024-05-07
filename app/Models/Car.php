@@ -15,6 +15,14 @@ class Car extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
 
+    protected $fillable = [
+        'plate_number',
+        'owner',
+       'model',
+       'make',
+        'performance'
+    ];
+
     public function rentals()
     {
         return $this->hasMany(Rental::class, 'car_id','id');

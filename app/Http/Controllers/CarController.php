@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorecarRequest;
+use App\Http\Requests\UpdatecarRequest;
+use App\Http\Resources\CarResource;
 use App\Models\Car;
 use Illuminate\Http\Request;
 
@@ -12,16 +15,16 @@ class CarController extends Controller
      */
     public function index()
     {
-        return Car::all();
-        
+        return CarResource::collection(Car::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorecarRequest $request)
     {
-        //
+        $car = Car::create($request->all());
+        return new CarResource($car);
     }
 
     /**
@@ -29,15 +32,16 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        return new CarResource($car);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(UpdatecarRequest $request, Car $car)
     {
-        //
+        $car->update($request->all());
+        return new CarResource($car);
     }
 
     /**
@@ -45,6 +49,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $car->delete();
+        return response()->noContent();
     }
 }
