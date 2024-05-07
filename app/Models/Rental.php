@@ -14,6 +14,12 @@ class Rental extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
 
+    protected $fillable = [
+        'car_id',
+        'start_date',
+        'end_date',
+    ];
+
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class, 'car_id', 'id');
